@@ -6,11 +6,11 @@ Kakuro is one of the logical pastimes popularized by the Japanese magazine Nikol
 
 An example of Kakuro board is as given below:
 
-[[1](https://www.cs.us.es/cursos/ic/trabajo/kakuro.png)]
+[![1](https://www.cs.us.es/cursos/ic/trabajo/kakuro.png)]
 
 The solution of the example is as given below:
 
-[[2](https://www.cs.us.es/cursos/ic/trabajo/kakuro-resuelto.png)]
+[![2](https://www.cs.us.es/cursos/ic/trabajo/kakuro-resuelto.png)]
 
 We will say that Kakuro is well posed if it has a unique solution.
 
