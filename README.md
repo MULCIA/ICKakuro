@@ -14,6 +14,6 @@ The solution of the example is as given below:
 
 We will say that Kakuro is well posed if it has a unique solution.
 
-The aim of this work is to implement a CLIPS software that it can solve any Kakuro using deductively. It is to get the value of the boxes of the board using rules, which they analyze the possible values of the related boxes.
+The aim of this work is to implement a [CLIPS software](http://clipsrules.sourceforge.net/) that it can solve any Kakuro using deductively. It is to get the value of the boxes of the board using rules, which they analyze the possible values of the related boxes.
 
 It can be done using rules that determine the value of a cell, or that eliminate possible values of its range.
