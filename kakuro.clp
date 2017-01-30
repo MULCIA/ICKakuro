@@ -257,6 +257,14 @@
   (modify ?h3
           (rango $?ini $?fin)))
 
+(defrule eliminar-asignados-columna
+  ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
+  ?h3 <- (celda (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  =>
+  (modify ?h3
+          (rango $?ini $?fin)))
+
 
 
 
