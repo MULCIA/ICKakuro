@@ -249,6 +249,15 @@
   (modify ?h2
           (rango $?ini)))
 
+(defrule eliminar-asignados-fila
+  ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (rango ?r1&:(<= ?r1 ?v)))
+  ?h3 <- (celda (fila ?f2&:(eq ?f2 ?f1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  =>
+  (modify ?h3
+          (rango $?ini $?fin)))
+
+
 
 
 
