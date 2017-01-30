@@ -242,6 +242,14 @@
 
 ;;;============================================================================
 
+(defrule restriccion-con-unica-casilla
+  ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c)) (rango $?))
+  =>
+  (modify ?h2
+          (rango ?v))
+)
+
 (defrule eliminar-no-candidatos
   ?h1 <- (restriccion (valor ?v1&:(<= ?v1 9)) (casillas $? ?c $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?v2&:(eq ?v2 ?v1) $?))
