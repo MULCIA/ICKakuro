@@ -241,3 +241,17 @@
   (assert (celda (id ?id) (fila (div ?id 10)) (columna (mod ?id 10)))))
 
 ;;;============================================================================
+
+(defrule eliminar-no-candidatos
+  ?h1 <- (restriccion (valor ?v1&:(<= ?v1 9)) (casillas $? ?c $?))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?v2&:(eq ?v2 ?v1) $?))
+  =>
+  (modify ?h2
+          (rango $?ini)))
+
+
+
+
+
+
+
