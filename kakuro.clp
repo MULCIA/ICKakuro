@@ -1766,8 +1766,9 @@
 ;;; dicho valor del rango del resto de celdas de la misma fila.
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
-  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(eq ?f2 ?f1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(eq ?f2 ?f1)) (columna ?c2&:(neq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  (test (or (> (length $?ini) 0) (> (length $?fin) 0))
   =>
   (modify ?h3
           (rango $?ini $?fin)))
@@ -1776,8 +1777,9 @@
 ;;; dicho valor del rango del resto de celdas de la misma columna.
 (defrule eliminar-asignados-columna
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
-  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(neq ?f2 ?f1)) (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  (test (or (> (length $?ini) 0) (> (length $?fin) 0))
   =>
   (modify ?h3
           (rango $?ini $?fin)))
