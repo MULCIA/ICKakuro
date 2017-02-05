@@ -242,6 +242,8 @@
 
 ;;;============================================================================
 
+;;; Reglas basicas.
+
 ;;; Si hay una celda que tiene una unica restriccion y este vale <= 9,
 ;;; solucionar celda asignando el valor de la restriccion.
 (defrule restriccion-con-unica-casilla
@@ -505,54 +507,6 @@
   =>
   (modify ?h2
           (rango $?ini $?ini))
-)
-
-.........................................................
-(defrule bloque-magico-sum4-2cas
-  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
-  =>
-  (modify ?h2
-          (rango 1 3))
-  (modify ?h3
-          (rango 1 3))
-)
-
-(defrule bloque-magico-sum16-2cas
-  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
-  =>
-  (modify ?h2
-          (rango 7 9))
-  (modify ?h3
-          (rango 7 9))
-)
-
-(defrule bloque-magico-sum17-2cas
-  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
-  =>
-  (modify ?h2
-          (rango 8 9))
-  (modify ?h3
-          (rango 8 9))
-)
-
-(defrule bloque-magico-sum3-2cas
-  ?h1 <- (restriccion (valor ?v&:(eq ?v 6)) (casillas ?c1 ?c2 ?c3))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
-  ?h4 <- (celda (id ?h&:(eq ?h ?c3)) (rango($?)))
-  =>
-  (modify ?h2
-          (rango 1 2))
-  (modify ?h3
-          (rango 1 2))
-  (modify ?h4
-          (rango 1 2))
 )
 
 ;;;============================================================================
