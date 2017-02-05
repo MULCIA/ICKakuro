@@ -580,6 +580,123 @@
           (rango $?ini $?ini))
 )
 
+...
+
+;;; BM - Eliminar valor 1 o 3 para celdas con restriccion 41 y numero de casillas 7
+(defrile bloque-magico-sum41-7cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c1)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c2)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c3)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c4
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c4)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c5
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c5)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c6
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c6)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum41-7cas-elimina-de-c7
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 41)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c7)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+
+;;; BM - Eliminar valor 1 o 2 para celdas con restriccion 42 y numero de casillas 7
+(defrile bloque-magico-sum42-7cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c1)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c2)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c3)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c4
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c4)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c5
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c5)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c6
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c6)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum42-7cas-elimina-de-c7
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 42)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c7)) (rango $?ini ?r&:(or (eq ?r 1) (eq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
 ;;; BM - Eliminar valor 9 para celdas con restriccion 36 y numero de casillas 8
 (defrile bloque-magico-sum36-8cas-elimina-de-c1
   ?h1 <- (restriccion (valor ?v&:(eq ?v 36)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
