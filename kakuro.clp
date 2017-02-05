@@ -247,6 +247,7 @@
 ;;; Si hay una celda que tiene una unica restriccion y este vale <= 9,
 ;;; solucionar celda asignando el valor de la restriccion.
 (defrule restriccion-con-unica-casilla
+  (declare (salience 50))
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c))
   ?h2 <- (celda (id ?i&:(eq ?i ?c)) (rango $?))
   =>
@@ -256,8 +257,9 @@
 ;;; Si hay celdas que tienen una restriccion <= 9, solucionar celda asignando
 ;;; el rango de valores desde 1 hasta el valor de la restriccion menos 1.
 (defrule eliminar-no-candidatos
-  ?h1 <- (restriccion (valor ?v1&:(<= ?v1 9)) (casillas $? ?c $?))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?v2&:(eq ?v2 ?v1) $?))
+  (declare (salience 50))
+  ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas $? ?c $?))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?r&:(eq ?r ?v) $?))
   =>
   (modify ?h2
           (rango $?ini)))
@@ -1765,7 +1767,7 @@
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (fila ?f2&:(eq ?f2 ?f1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(eq ?f2 ?f1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
   =>
   (modify ?h3
           (rango $?ini $?fin)))
@@ -1775,7 +1777,7 @@
 (defrule eliminar-asignados-columna
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
   =>
   (modify ?h3
           (rango $?ini $?fin)))
