@@ -580,7 +580,7 @@
           (rango $?ini $?ini))
 )
 
-;;; BM - Elimina valor distintos de 1, 2, 3 4 y 5 para celdas con restriccion 15 y
+;;; BM - Elimina valor distintos de 1, 2, 3, 4 y 5 para celdas con restriccion 15 y
 ;;; numero de casillas 5
 (defrule bloque-magico-sum15-5cas-elimina-de-c1
   ?h1 <- (restriccion (valor ?v&:(eq ?v 15)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -622,7 +622,7 @@
           (rango $?ini $?ini))
 )
 
-;;; BM - Elimina valor distintos de 1, 2, 3 4 y 6 para celdas con restriccion 16 y
+;;; BM - Elimina valor distintos de 1, 2, 3, 4 y 6 para celdas con restriccion 16 y
 ;;; numero de casillas 5
 (defrule bloque-magico-sum16-5cas-elimina-de-c1
   ?h1 <- (restriccion (valor ?v&:(eq ?v 16)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
