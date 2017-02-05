@@ -242,14 +242,17 @@
 
 ;;;============================================================================
 
+;;; Si hay una celda que tiene una unica restriccion y este vale <= 9,
+;;; solucionar celda asignando el valor de la restriccion.
 (defrule restriccion-con-unica-casilla
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c))
   ?h2 <- (celda (id ?i&:(eq ?i ?c)) (rango $?))
   =>
   (modify ?h2
-          (rango ?v))
-)
+          (rango ?v)))
 
+;;; Si hay celdas que tienen una restriccion <= 9, solucionar celda asignando
+;;; el rango de valores desde 1 hasta el valor de la restriccion menos 1.
 (defrule eliminar-no-candidatos
   ?h1 <- (restriccion (valor ?v1&:(<= ?v1 9)) (casillas $? ?c $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?v2&:(eq ?v2 ?v1) $?))
@@ -257,6 +260,305 @@
   (modify ?h2
           (rango $?ini)))
 
+;;;============================================================================
+
+;;; Regras para encontrar bloques magicos, que son bloques que nos ayudan a
+;;; eliminar candidatos y encontrar posibilidades de resolucion con 
+;;; reglas de interseccion
+
+;;; BM - Elimina valor distintos de 1 y 2 para celdas con restriccion 3 y
+;;; numero de casillas 2
+(defrule bloque-magico-sum3-2cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 3)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum3-2cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 3)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 1 y 3 para celdas con restriccion 4 y
+;;; numero de casillas 2
+(defrule bloque-magico-sum4-2cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum4-2cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 7 y 9 para celdas con restriccion 16 y
+;;; numero de casillas 2
+(defrule bloque-magico-sum16-2cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 16)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 7) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum16-2cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 16)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 7) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 8 y 9 para celdas con restriccion 17 y
+;;; numero de casillas 2
+(defrule bloque-magico-sum17-2cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 17)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum17-2cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 17)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 1, 2 y 3 para celdas con restriccion 6 y
+;;; numero de casillas 3
+(defrule bloque-magico-sum6-3cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 6)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum6-3cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 6)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum6-3cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 6)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c3)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 3)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 1, 2 y 4 para celdas con restriccion 7 y
+;;; numero de casillas 3
+(defrule bloque-magico-sum7-3cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 7)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 4)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum7-3cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 7)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 4)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum7-3cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 7)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c3)) (rango $?ini ?r&:(and (neq ?r 1) (neq ?r 2) (neq ?r 4)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 6, 8 y 9 para celdas con restriccion 23 y
+;;; numero de casillas 3
+(defrule bloque-magico-sum23-3cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 23)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 6) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum23-3cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 23)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 6) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum23-3cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 23)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c3)) (rango $?ini ?r&:(and (neq ?r 6) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Elimina valor distintos de 7, 8 y 9 para celdas con restriccion 24 y
+;;; numero de casillas 3
+(defrule bloque-magico-sum24-3cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 24)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?ini ?r&:(and (neq ?r 7) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum24-3cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 24)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c2)) (rango $?ini ?r&:(and (neq ?r 7) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrule bloque-magico-sum24-3cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 24)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c3)) (rango $?ini ?r&:(and (neq ?r 7) (neq ?r 8) (neq ?r 9)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+;;; BM - Eliminar valor 1 para celdas con restriccion 44 y numero de casillas 8
+(defrile bloque-magico-sum44-8cas-elimina-de-c1
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c1)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c2
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c2)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c3
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c3)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c4
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c4)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c5
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c5)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c6
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c6)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c7
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c7)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+(defrile bloque-magico-sum44-8cas-elimina-de-c8
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 44)) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7 ?c8))
+  ?h2 <- (celda (id ?i&:(eq ??i ?c8)) (rango $?ini ?r&:(eq ?r 1) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?ini))
+)
+
+.........................................................
+(defrule bloque-magico-sum4-2cas
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
+  =>
+  (modify ?h2
+          (rango 1 3))
+  (modify ?h3
+          (rango 1 3))
+)
+
+(defrule bloque-magico-sum16-2cas
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
+  =>
+  (modify ?h2
+          (rango 7 9))
+  (modify ?h3
+          (rango 7 9))
+)
+
+(defrule bloque-magico-sum17-2cas
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 4)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
+  =>
+  (modify ?h2
+          (rango 8 9))
+  (modify ?h3
+          (rango 8 9))
+)
+
+(defrule bloque-magico-sum3-2cas
+  ?h1 <- (restriccion (valor ?v&:(eq ?v 6)) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango($?)))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango($?)))
+  ?h4 <- (celda (id ?h&:(eq ?h ?c3)) (rango($?)))
+  =>
+  (modify ?h2
+          (rango 1 2))
+  (modify ?h3
+          (rango 1 2))
+  (modify ?h4
+          (rango 1 2))
+)
+
+;;;============================================================================
+
+;;; Hay celdas en una fila que solo tienen un valor en su rango, eliminar 
+;;; dicho valor del rango del resto de celdas de la misma fila.
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (rango ?r1&:(<= ?r1 ?v)))
@@ -265,6 +567,8 @@
   (modify ?h3
           (rango $?ini $?fin)))
 
+;;; Hay celdas en una columna que solo tienen un valor en su rango, eliminar 
+;;; dicho valor del rango del resto de celdas de la misma columna.
 (defrule eliminar-asignados-columna
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
@@ -272,6 +576,8 @@
   =>
   (modify ?h3
           (rango $?ini $?fin)))
+
+
 
 
 
