@@ -1786,6 +1786,10 @@
   (modify ?h3
           (rango $?inih3 $?finh3)))
 
+;;; Si un valor del rango esta solo en una celda de su fila, eliminar el resto y dejar solo ese valor.
+
+;;; Si un valor del rango esta solo en una celda de su columna, eliminar el resto y dejar solo ese valor.
+
 
 
 
