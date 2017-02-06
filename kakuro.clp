@@ -1766,23 +1766,25 @@
 ;;; dicho valor del rango del resto de celdas de la misma fila.
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
-  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(eq ?f2 ?f1)) (columna ?c2&:(neq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
-  (test (or (> (length $?ini) 0) (> (length $?fin) 0))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(eq ?f2 ?f1)) (columna ?c2&:(neq ?c2 ?c1)) (rango $?inih3 ?r2&:(eq ?r2 ?r1) $?finh3))
+  (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
+  (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
   =>
   (modify ?h3
-          (rango $?ini $?fin)))
+          (rango $?inih3 $?finh3)))
 
 ;;; Hay celdas en una columna que solo tienen un valor en su rango, eliminar 
 ;;; dicho valor del rango del resto de celdas de la misma columna.
 (defrule eliminar-asignados-columna
   ?h1 <- (restriccion (valor ?v) (casillas $? ?j $?))
-  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango ?r1&:(<= ?r1 ?v)))
-  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(neq ?f2 ?f1)) (columna ?c2&:(eq ?c2 ?c1)) (rango $?ini ?r2&:(eq ?r2 ?r1) $?fin))
-  (test (or (> (length $?ini) 0) (> (length $?fin) 0))
+  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (fila ?f2&:(neq ?f2 ?f1)) (columna ?c2&:(eq ?c2 ?c1)) (rango $?inih3 ?r2&:(eq ?r2 ?r1) $?finh3))
+  (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
+  (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
   =>
   (modify ?h3
-          (rango $?ini $?fin)))
+          (rango $?inih3 $?finh3)))
 
 
 
