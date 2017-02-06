@@ -2028,6 +2028,14 @@
   (modify ?h3
           (rango $?inih3 $?finh3)))
 
+;;; Una restriccion par y valor <= 18, en sus casillas no puede estar el valor/2
+(defrule eliminar-valor-entre-2-si-par-menor-igual-18
+  ?h1 <- (restriccion (valor ?v&:(and (eq (mod ?v 2) 0) (<= ?v 18))) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (rango $?ini ?r&:(eq ?r (div ?v 2)) $?fin))
+  =>
+  (modify ?h2
+          (rango $?ini $?fin)))
+
 ;;; Si un valor del rango esta solo en una celda de su fila, eliminar el resto y dejar solo ese valor.
 
 ;;; Si un valor del rango esta solo en una celda de su columna, eliminar el resto y dejar solo ese valor.
