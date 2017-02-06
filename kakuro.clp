@@ -247,7 +247,7 @@
 ;;; Si hay una celda que tiene una unica restriccion y este vale <= 9,
 ;;; solucionar celda asignando el valor de la restriccion.
 (defrule restriccion-con-unica-casilla
-  (declare (salience 50))
+  (declare (salience 90))
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c))
   ?h2 <- (celda (id ?i&:(eq ?i ?c)) (rango $?))
   =>
@@ -257,7 +257,7 @@
 ;;; Si hay celdas que tienen una restriccion <= 9, solucionar celda asignando
 ;;; el rango de valores desde 1 hasta el valor de la restriccion menos 1.
 (defrule eliminar-no-candidatos
-  (declare (salience 50))
+  (declare (salience 90))
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas $? ?c $?))
   ?h2 <- (celda (id ?i&:(eq ?i ?c))  (rango $?ini ?r&:(eq ?r ?v) $?))
   =>
@@ -270,10 +270,9 @@
 ;;; es <= 9, resolver haciendo la resta.
 
 (defrule resolver-fila-2cas
-  (declare (salience 25))
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c1 ?c2))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (fila ?fh3&:(eq ?fh3 ?fh2)) (columna ?ch3&:(neq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
+  ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?j&:(or (eq ?j ?c1) (eq ?j ?c2))) (fila ?fh3&:(eq ?fh3 ?fh2)) (columna ?ch3&:(neq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
   (test (neq ?i ?j))
   (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
   (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
@@ -284,10 +283,9 @@
           (rango ?r2)))
 
 (defrule resolver-columna-2cas
-  (declare (salience 25))
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c1 ?c2))
-  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
-  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (fila ?fh3&:(neq ?fh3 ?fh2)) (columna ?ch3&:(eq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
+  ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?j&:(or (eq ?j ?c1) (eq ?j ?c2))) (fila ?fh3&:(neq ?fh3 ?fh2)) (columna ?ch3&:(eq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
   (test (neq ?i ?j))
   (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
   (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
@@ -296,6 +294,35 @@
   =>
   (modify ?h3
           (rango ?r2)))
+
+;;; Grupos de dos casillas que tienen una de las dos resuelta y la restriccion
+;;; es > 9, resolver haciendo la resta.
+
+(defrule resolver-conjunto-2cas-fila-mayor-9
+  ?h1 <- (restriccion (valor ?v&:(> ?v 9)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?j&:(or (eq ?j ?c1) (eq ?j ?c2))) (fila ?fh3&:(eq ?fh3 ?fh2)) (columna ?ch3&:(neq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
+  (test (neq ?i ?j))
+  (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
+  (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
+  (test (neq ?r1 ?r2))
+  (test (eq (+ ?r1 ?r2) ?v))
+  =>
+  (modify ?h3
+        (rango ?r2)))
+
+(defrule resolver-conjunto-2cas-columna-mayor-9
+  ?h1 <- (restriccion (valor ?v&:(> ?v 9)) (casillas ?c1 ?c2))
+  ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
+  ?h3 <- (celda (id ?j&:(or (eq ?j ?c1) (eq ?j ?c2))) (fila ?fh3&:(neq ?fh3 ?fh2)) (columna ?ch3&:(eq ?ch3 ?ch2)) (rango $?inih3 ?r2&:(<= ?r2 ?v) $?finh3))
+  (test (neq ?i ?j))
+  (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
+  (test (or (> (length $?inih3) 0) (> (length $?finh3) 0)))
+  (test (neq ?r1 ?r2))
+  (test (eq (+ ?r1 ?r2) ?v))
+  =>
+  (modify ?h3
+        (rango ?r2)))
 
 ;;;============================================================================
 
@@ -2004,7 +2031,6 @@
 ;;; Si un valor del rango esta solo en una celda de su fila, eliminar el resto y dejar solo ese valor.
 
 ;;; Si un valor del rango esta solo en una celda de su columna, eliminar el resto y dejar solo ese valor.
-
 
 
 
