@@ -1,21 +1,21 @@
 ;;; IC: Trabajo (2016/2017)
-;;; Resolución deductiva de un Kakuro
-;;; Departamento de Ciencias de la Computación e Inteligencia Artificial 
+;;; Resolucion deductiva de un Kakuro
+;;; Departamento de Ciencias de la Computacion e Inteligencia Artificial 
 ;;; Universidad de Sevilla
 ;;;============================================================================
 
 
 ;;;============================================================================
-;;; Representación del Kakuro
+;;; Representacion del Kakuro
 ;;;============================================================================
 
 ;;;   Utilizaremos la siguiente plantilla para representar las celdas del
 ;;; Kakuro. Cada celda tiene los siguientes campos:
-;;; - id: Identificador único de la celda
-;;; - fila: Número de fila en la que se encuentra la celda
-;;; - columna: Número de columna en la que se encuentra la celda
+;;; - id: Identificador unico de la celda
+;;; - fila: Numero de fila en la que se encuentra la celda
+;;; - columna: Numero de columna en la que se encuentra la celda
 ;;; - rango: Rango de valores que se pueden colocar en la celda. Inicialmente
-;;;   el rango son todos los valores numéricos de 1 a 9.
+;;;   el rango son todos los valores numericos de 1 a 9.
 
 (deftemplate celda
   (slot id)
@@ -24,14 +24,14 @@
   (multislot rango
              (default (create$ 1 2 3 4 5 6 7 8 9))))
 
-;;;   De esta forma, una celda tendrá un valor asignado si y solo si dicho
-;;; valor es el único elemento del rango.
+;;;   De esta forma, una celda tendra un valor asignado si y solo si dicho
+;;; valor es el unico elemento del rango.
 
 ;;;   La siguiente variable global sirve enumerar las restricciones del puzle.
 
 (defglobal ?*restricciones* = 0)
 
-;;;   La siguiente función sirve para asignar de forma automática y única
+;;;   La siguiente funcion sirve para asignar de forma automatica y unica
 ;;; identificadores a las restricciones del puzle. 
 
 (deffunction idRestriccion ()
@@ -39,11 +39,11 @@
   ?*restricciones*)
 
 ;;;   Utilizaremos la siguiente plantilla para almacenar las restricciones del
-;;; puzle. Cada restricción tiene los siguientes campos:
-;;; - id: Identificador único de la restricción
-;;; - valor: Valor de la restricción
+;;; puzle. Cada restriccion tiene los siguientes campos:
+;;; - id: Identificador unico de la restriccion
+;;; - valor: Valor de la restriccion
 ;;; - casillas: Identificadores de las casillas que se ven afectadas por la
-;;;   restricción
+;;;   restriccion
 
 (deftemplate restriccion
   (slot id
@@ -52,7 +52,7 @@
   (multislot casillas))
 
 ;;;============================================================================
-;;; Estrategias de resolución
+;;; Estrategias de resolucion
 ;;;============================================================================
 
 ;;;   El objetivo del trabajo consiste en implementar un conjunto de reglas
@@ -68,14 +68,14 @@
 ;;;============================================================================
 
 ;;;   Las siguientes reglas permiten visualizar el estado del puzle, una vez
-;;; aplicadas todas las reglas que implementan las estrategias de resolución.
-;;; La prioridad de estas reglas es -10 para que sean las últimas en
+;;; aplicadas todas las reglas que implementan las estrategias de resolucion.
+;;; La prioridad de estas reglas es -10 para que sean las ultimas en
 ;;; aplicarse.
 
-;;;   Para las casillas del tablero con un único valor en su rango se indica
+;;;   Para las casillas del tablero con un unico valor en su rango se indica
 ;;; dicho valor, para las casillas del tablero en las que no se haya podido
-;;; deducir el valor se indica el símbolo '?'. El resto de las casillas hasta
-;;; completar la cuadrícula 9x9 se dejan en blanco.
+;;; deducir el valor se indica el simbolo '?'. El resto de las casillas hasta
+;;; completar la cuadricula 9x9 se dejan en blanco.
 
 (defrule imprime-solucion
   (declare (salience -10))
@@ -121,7 +121,7 @@
 ;;; Funcionalidad para leer los puzles del fichero de ejemplos
 ;;;============================================================================
 
-;;;   Esta función crea una lista de identificadores de casillas en horizontal.
+;;;   Esta funcion crea una lista de identificadores de casillas en horizontal.
 
 (deffunction crea-casillas-horizontal (?f ?c ?n)
   (bind ?datos (create$))
@@ -130,8 +130,8 @@
    (bind ?datos (insert$ ?datos ?n (eval (str-cat ?f (+ ?c ?i))))))
   ?datos)
 
-;;;   Esta función construye los hechos que representan las restricciones de
-;;; una línea horizontal del Kakuro.
+;;;   Esta funcion construye los hechos que representan las restricciones de
+;;; una linea horizontal del Kakuro.
 
 (deffunction procesa-restricciones-fila (?f $?linea)
   (bind ?i 1)
@@ -153,7 +153,7 @@
                        (crea-casillas-horizontal ?f ?c (- ?i ?c)))))))
   TRUE)
 
-;;;   Esta función crea una lista de identificadores de casillas en vertical.
+;;;   Esta funcion crea una lista de identificadores de casillas en vertical.
 
 (deffunction crea-casillas-vertical (?f ?c ?n)
   (bind ?datos (create$))
@@ -162,8 +162,8 @@
    (bind ?datos (insert$ ?datos ?n (eval (str-cat (+ ?f ?i) ?c)))))
   ?datos)
 
-;;;   Esta función construye los hechos que representan las restricciones de
-;;; una línea horizontal del Kakuro.
+;;;   Esta funcion construye los hechos que representan las restricciones de
+;;; una linea horizontal del Kakuro.
 
 (deffunction procesa-restricciones-columna (?c $?linea)
   (bind ?i 1)
@@ -185,7 +185,7 @@
                        (crea-casillas-vertical ?f ?c (- ?i ?f)))))))
   TRUE)
 
-;;;   Esta función construye todos los hechos que representan las restricciones
+;;;   Esta funcion construye todos los hechos que representan las restricciones
 ;;; de un Kakuro dado en el formato utilizado en el fichero de ejemplos.
 
 (deffunction procesa-restricciones-ejemplo (?datos)
@@ -209,7 +209,7 @@
    (procesa-restricciones-columna (- ?j 1) ?linea))
   TRUE)
 
-;;;   Esta función localiza el Kakuro que se quiere resolver en el fichero de
+;;;   Esta funcion localiza el Kakuro que se quiere resolver en el fichero de
 ;;; ejemplos.
 
 (deffunction lee-kakuro (?n)
@@ -220,14 +220,14 @@
   (procesa-restricciones-ejemplo ?datos)
   (close data))
 
-;;;   Esta regla pregunta al usuario que número de Kakuro del fichero de
+;;;   Esta regla pregunta al usuario que numero de Kakuro del fichero de
 ;;; ejemplos se quiere resolver y genera los hechos que representan las
 ;;; restricciones asociadas.
 
 (defrule kakuro-numero
   (declare (salience 100))
   =>
-  (printout t "Qué problema quieres resolver (1-50)? : ")
+  (printout t "Que problema quieres resolver (1-50)? : ")
   (lee-kakuro (read)))
 
 ;;;   Esta regla construye las celdas que aparecen en alguna de las
