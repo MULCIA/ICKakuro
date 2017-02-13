@@ -3465,8 +3465,6 @@
 
 ;;;============================================================================
 
-;;; Probar
-
 ;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
 ;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-3cas-0resueltas
