@@ -3255,8 +3255,6 @@
 
 ;;;============================================================================
 
-;;; Probar
-
 ;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
 ;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-4cas-1resueltas-1
@@ -3462,5 +3460,59 @@
     then (modify ?h3 (rango ?candidate1))
          (modify ?h4 (rango ?candidate2))
          (modify ?h5 (rango ?candidate3))
+  )
+)
+
+;;;============================================================================
+
+;;; Probar
+
+;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
+;;; probar combinaciones y asingar si solo hay una posible
+(defrule resolver-3cas-0resueltas
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango $?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango $?r3))
+  (test (> (length $?r1) 1))
+  (test (> (length $?r2) 1))
+  (test (> (length $?r3) 1))
+  =>
+  (bind $?rango1 $?r1)
+  (bind $?rango2 $?r2)
+  (bind $?rango3 $?r3)
+  (bind ?candidate1 0)
+  (bind ?candidate2 0)
+  (bind ?candidate3 0)
+  (bind ?i 1)
+  (bind ?j 1)
+  (bind ?k 1)
+  (bind ?cont 0)
+  (while (<= ?i (length $?rango1))
+    (bind ?a (nth$ ?i $?rango1))
+    (while (<= ?j (length $?rango2))
+      (bind ?b (nth$ ?j $?rango2))
+      	(while (<= ?k (length $?rango3))
+      		(bind ?c (nth$ ?k $?rango3))
+      			(if (and (eq ?v (+ ?a (+ ?b ?c))) (neq ?a ?b) (neq ?a ?c) (neq ?b ?c))
+        			then
+             		(bind ?cont (+ ?cont +1)) 
+             		(bind ?candidate1 ?a) 
+             		(bind ?candidate2 ?b) 
+             		(bind ?candidate3 ?c) 
+      		)
+      		(bind ?k (+ ?k 1))
+      	)
+      (bind ?j (+ ?j 1))
+      (bind ?k 1)
+    )
+    (bind ?i (+ ?i 1))
+    (bind ?j 1)
+  )
+  (if (eq ?cont 1)
+    then (modify ?h2 (rango ?candidate1))
+         (modify ?h3 (rango ?candidate2))
+         (modify ?h4 (rango ?candidate3))
   )
 )
