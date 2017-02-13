@@ -4,6 +4,8 @@
 ;;; Universidad de Sevilla
 ;;;============================================================================
 
+;;; Realizado por: Sergio Rodriguez Calvo
+;;; Fecha: 15 febrero 2017
 
 ;;;============================================================================
 ;;; Representacion del Kakuro
