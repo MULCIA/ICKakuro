@@ -283,19 +283,6 @@
 ;;; Si en un grupo de celdas para una restriccion ya hay una resuelta, eliminar 
 ;;; dicho valor del rango del resto de casillas a las que aplica la misma restriccion
 
-;;; TODO
-
-;;;(defrule eliminar-asignados-celdas-vecinas
-;;;  ?h1 <- (restriccion (valor ?v) (casillas $?ini ?j $?fin))
-;;;  ?h2 <- (celda (id ?i&:(eq ?i ?j)) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
-;;;  ?h3 <- (celda (id ?k&:(neq ?k ?i)) (rango $?inih3 ?r2&:(eq ?r2 ?r1) $?finh3))
-;;;  (test (and (eq (length $?inih2) 0) (eq (length $?finh2) 0)))
-;;;  (test (or (> (length $?inih3) 1) (> (length $?finh3) 1)))
-;;;  (test (or (member ?k $?ini) (member ?k $?fin)))
-;;;  =>
-;;;  (modify ?h3
-;;;          (rango $?inih3 $?finh3)))
-
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $?ini ?j $?fin))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
