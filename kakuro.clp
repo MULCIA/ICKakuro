@@ -1672,6 +1672,247 @@
   )
 )
 
+;;;============================================================================
+;;; Reglas que resuelven restricciones que aplican a exactamente 6 celdas
+;;;============================================================================
+
+;;; Si una restriccion aplica sobre 6 casillas, y una de ellas no esta 
+;;; resueltas, por tanto, resolver aplicando la resta a la restriccion del
+;;; total de sumar el resto de elementos.
+(defrule resolver-6cas-5resueltas-1
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  (test (> (length $?r1) 1))
+  =>
+  (bind ?res (- ?v (+ ?r2 (+ ?r3 (+ ?r4 ( + ?r5 ?r6))))))
+  (if (<= ?res 9)
+    then (modify ?h2 (rango ?res))
+  )
+)
+
+(defrule resolver-6cas-5resueltas-2
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango $?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  (test (> (length $?r2) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r3 (+ ?r4 ( + ?r5 ?r6))))))
+  (if (<= ?res 9)
+    then (modify ?h3 (rango ?res))
+  )
+)
+
+(defrule resolver-6cas-5resueltas-3
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango $?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  (test (> (length $?r3) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r4 ( + ?r5 ?r6))))))
+  (if (<= ?res 9)
+    then (modify ?h4 (rango ?res))
+  )
+)
+
+(defrule resolver-6cas-5resueltas-4
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango $?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  (test (> (length $?r4) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r5 ?r6))))))
+  (if (<= ?res 9)
+    then (modify ?h5 (rango ?res))
+  )
+)
+
+(defrule resolver-6cas-5resueltas-5
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango $?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  (test (> (length $?r5) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r4 ?r6))))))
+  (if (<= ?res 9)
+    then (modify ?h6 (rango ?res))
+  )
+)
+
+(defrule resolver-6cas-5resueltas-6
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango $?r6))
+  (test (> (length $?r6) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r4 ?r5))))))
+  (if (<= ?res 9)
+    then (modify ?h7 (rango ?res))
+  )
+)
+
+;;;============================================================================
+;;; Reglas que resuelven restricciones que aplican a exactamente 7 celdas
+;;;============================================================================
+
+;;; Si una restriccion aplica sobre 7 casillas, y una de ellas no esta 
+;;; resueltas, por tanto, resolver aplicando la resta a la restriccion del
+;;; total de sumar el resto de elementos.
+(defrule resolver-7cas-6resueltas-1
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango $?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r1) 1))
+  =>
+  (bind ?res (- ?v (+ ?r2 (+ ?r3 (+ ?r4 ( + ?r5 (+ ?r6 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h2 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-2
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango $?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r2) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r3 (+ ?r4 ( + ?r5 (+ ?r6 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h3 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-3
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango $?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r3) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r4 ( + ?r5 (+ ?r6 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h4 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-4
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango $?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r4) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r5 (+ ?r6 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h5 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-5
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango $?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r5) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r4 (+ ?r6 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h6 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-6
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango $?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango ?r7))
+  (test (> (length $?r6) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r4 (+ ?r5 ?r7)))))))
+  (if (<= ?res 9)
+    then (modify ?h7 (rango ?res))
+  )
+)
+
+(defrule resolver-7cas-6resueltas-7
+  (declare (salience -8))
+  ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5 ?c6 ?c7))
+  ?h2 <- (celda (id ?i&:(eq ?i ?c1)) (rango ?r1))
+  ?h3 <- (celda (id ?j&:(eq ?j ?c2)) (rango ?r2))
+  ?h4 <- (celda (id ?k&:(eq ?k ?c3)) (rango ?r3))
+  ?h5 <- (celda (id ?l&:(eq ?l ?c4)) (rango ?r4))
+  ?h6 <- (celda (id ?m&:(eq ?m ?c5)) (rango ?r5))
+  ?h7 <- (celda (id ?n&:(eq ?n ?c6)) (rango ?r6))
+  ?h8 <- (celda (id ?o&:(eq ?o ?c7)) (rango $?r7))
+  (test (> (length $?r7) 1))
+  =>
+  (bind ?res (- ?v (+ ?r1 (+ ?r2 (+ ?r3 ( + ?r4 (+ ?r5 ?r6)))))))
+  (if (<= ?res 9)
+    then (modify ?h8 (rango ?res))
+  )
+)
 
 ;;;============================================================================
 ;;; Reglas que aplican en bloques magicos
