@@ -284,7 +284,6 @@
 
 ;;; Si en un grupo de celdas para una restriccion ya hay una resuelta, eliminar 
 ;;; dicho valor del rango del resto de casillas a las que aplica la misma restriccion
-
 (defrule eliminar-asignados-fila
   ?h1 <- (restriccion (valor ?v) (casillas $?ini ?j $?fin))
   ?h2 <- (celda (id ?i&:(eq ?i ?j)) (fila ?f1) (columna ?c1) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
@@ -315,7 +314,6 @@
 
 ;;; Grupos de dos casillas que tienen una de las dos resuelta, la solucion es 
 ;;; restar a la restriccion y, el resultado, asignarlo a la otra celda.
-
 (defrule resolver-fila-2cas
   ?h1 <- (restriccion (valor ?v&:(<= ?v 9)) (casillas ?c1 ?c2))
   ?h2 <- (celda (id ?i&:(or (eq ?i ?c1) (eq ?i ?c2))) (fila ?fh2) (columna ?ch2) (rango $?inih2 ?r1&:(<= ?r1 ?v) $?finh2))
@@ -457,7 +455,7 @@
 
 ;;;============================================================================
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
+;;; Si una restriccion aplica sobre 3 casillas, y una de ellas esta resuelta
 ;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-3cas-1resueltas-1
   (declare (salience -8))
@@ -497,8 +495,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-3cas-1resueltas-2
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3))
@@ -537,8 +533,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-3cas-1resueltas-3
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3))
@@ -945,7 +939,7 @@
 
 ;;;============================================================================
 
-;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
+;;; Si una restriccion aplica sobre 4 casillas, y una de ellas esta resuelta
 ;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-4cas-1resueltas-1
   (declare (salience -8))
@@ -997,8 +991,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-4cas-1resueltas-2
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4))
@@ -1049,8 +1041,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-4cas-1resueltas-3
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4))
@@ -1101,8 +1091,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-4cas-1resueltas-4
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4))
@@ -1157,8 +1145,9 @@
 ;;; Reglas que resuelven restricciones que aplican a exactamente 5 celdas
 ;;;============================================================================
 
-;;; Si una restriccion aplica sobre 4 casillas, y dos de ellas estan resueltas
-;;; aplicar a la resultante la resta del valor de la restriccion con los dos valores asignados
+;;; Si una restriccion aplica sobre 5 casillas, y cuatro de ellas estan resueltas
+;;; aplicar a la resultante la resta del valor de la restriccion con los valores 
+;;; asignados
 (defrule resolver-5cas-4resueltas-1
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1241,7 +1230,7 @@
 
 ;;;============================================================================
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
+;;; Si una restriccion aplica sobre 5 casillas, y tres de ellas estan resueltas
 ;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-1
   (declare (salience -8))
@@ -1283,8 +1272,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-2
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1325,8 +1312,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-3
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1367,8 +1352,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-4
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1409,8 +1392,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-5
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1451,8 +1432,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-6
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1493,8 +1472,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-7
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1535,8 +1512,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-8
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1577,8 +1552,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-9
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
@@ -1619,8 +1592,6 @@
   )
 )
 
-;;; Si una restriccion aplica sobre 3 casillas, y una de ellas estan resueltas
-;;; probar combinaciones y asingar si solo hay una posible
 (defrule resolver-5cas-3resueltas-10
   (declare (salience -8))
   ?h1 <- (restriccion (valor ?v) (casillas ?c1 ?c2 ?c3 ?c4 ?c5))
